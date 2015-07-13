@@ -47,27 +47,6 @@ var AirMedia = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AirMedia.prototype, "appToken", {
-        get: function () {
-            return this._appToken;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(AirMedia.prototype, "trackId", {
-        get: function () {
-            return this._trackId;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(AirMedia.prototype, "challenge", {
-        get: function () {
-            return this._challenge;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(AirMedia.prototype, "sessionToken", {
         get: function () {
             return this._sessionToken;

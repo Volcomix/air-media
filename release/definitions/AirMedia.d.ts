@@ -18,9 +18,6 @@ declare module "air-media" {
         appVersion: string;    
         baseUrl: string;    
         appTokenFile: string;    
-        appToken: string;    
-        trackId: number;    
-        challenge: string;    
         sessionToken: string;    
         permissions: any;    
         constructor(_appId: string, _appName: string, _appVersion: string);    

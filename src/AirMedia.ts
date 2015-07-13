@@ -42,18 +42,6 @@ class AirMedia {
         return AirMedia.tokensDir + this._appId;
     }
     
-    get appToken(): string {
-        return this._appToken;
-    }
-    
-    get trackId(): number {
-        return this._trackId;
-    }
-    
-    get challenge(): string {
-        return this._challenge;
-    }
-    
     get sessionToken(): string {
         return this._sessionToken;
     }
