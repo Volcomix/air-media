@@ -4,13 +4,17 @@ import url = require('url');
 import http = require('http');
 import os = require('os');
 import crypto = require('crypto');
+import fs = require('fs');
+import path = require('path');
 
 import Q = require('q');
 import request = require('request');
+import mkdirp = require('mkdirp');
 
 class AirMedia {
 
     private static freeboxHost = 'http://mafreebox.freebox.fr';
+    private static tokensDir = 'tokens';
 
     private _baseUrl: string;
     private _appToken: string;
@@ -43,8 +47,7 @@ class AirMedia {
         return this._permissions;
     }
     
-    constructor(private appId: string, private appName: string, private appVersion: string) {
-        
+    constructor(private appId: string, private appName: string, private appVersion: string) {        
     }
 
     discover(): Q.Promise<AirMedia> {
@@ -77,8 +80,16 @@ class AirMedia {
         .then((result) => {
             this._appToken = result.app_token;
             this._trackId = result.track_id;
-            return this;
-        });
+            return Q.nfcall(mkdirp, AirMedia.tokensDir);
+        })
+        .then(() => {
+            return Q.nfcall(
+                fs.writeFile,
+                path.resolve(AirMedia.tokensDir, this.appId),
+                this._appToken
+            );
+        })
+        .then(() => { return this; });
     }
     
     trackAuthorization(): Q.Promise<AirMedia> {
@@ -96,6 +107,15 @@ class AirMedia {
                 default:
                     throw new Error('Authorization token status: ' + result.status);
             }
+        });
+    }
+    
+    getChallenge(): Q.Promise<AirMedia> {
+        return Q.nfcall(request.get, this._baseUrl + 'login/', { json: true })
+        .spread<any>(this.getResult)
+        .then((result) => {
+            this._challenge = result.challenge;
+            return this;
         });
     }
     

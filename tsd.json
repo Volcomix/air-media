@@ -40,6 +40,9 @@
     },
     "q/Q.d.ts": {
       "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "mkdirp/mkdirp.d.ts": {
+      "commit": "38c6ccfde0e67ff10d7408e0ee8b7720b3f21d3b"
     }
   }
 }

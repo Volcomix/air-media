@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/Volcomix/air-media#readme",
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "q": "^1.4.1",
     "request": "^2.58.0"
   },

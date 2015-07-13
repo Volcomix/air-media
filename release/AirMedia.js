@@ -2,8 +2,11 @@
 var url = require('url');
 var os = require('os');
 var crypto = require('crypto');
+var fs = require('fs');
+var path = require('path');
 var Q = require('q');
 var request = require('request');
+var mkdirp = require('mkdirp');
 var AirMedia = (function () {
     function AirMedia(appId, appName, appVersion) {
         this.appId = appId;
@@ -75,6 +78,10 @@ var AirMedia = (function () {
         }).spread(this.getResult).then(function (result) {
             _this._appToken = result.app_token;
             _this._trackId = result.track_id;
+            return Q.nfcall(mkdirp, AirMedia.tokensDir);
+        }).then(function () {
+            return Q.nfcall(fs.writeFile, path.resolve(AirMedia.tokensDir, _this.appId), _this._appToken);
+        }).then(function () {
             return _this;
         });
     };
@@ -129,6 +136,7 @@ var AirMedia = (function () {
         }
     };
     AirMedia.freeboxHost = 'http://mafreebox.freebox.fr';
+    AirMedia.tokensDir = 'tokens';
     return AirMedia;
 })();
 module.exports = AirMedia;

@@ -6,6 +6,7 @@ declare module "air-media" {
         private appName;    
         private appVersion;    
         private static freeboxHost;    
+        private static tokensDir;    
         private _baseUrl;    
         private _appToken;    
         private _trackId;    
