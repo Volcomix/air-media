@@ -1,8 +1,10 @@
 /// <reference path="../../typings/tsd.d.ts"/>
 
 import http = require('http');
+import fs = require('fs');
 
 import chai = require('chai');
+import Q = require('q');
 
 import AirMedia = require('../AirMedia');
 
@@ -14,36 +16,12 @@ describe('AirMedia', function() {
         before(function() {
             airMedia = new AirMedia("fr.freebox.airmedia.test", "AirMedia Test", "0.0.1");
         });
-        describe('#discover()', function() {
-            it('should get API base URL', function() {
-                return airMedia.discover()
-                .then(function() {
-                    airMedia.baseUrl.should.be.equal('http://mafreebox.freebox.fr/api/v3/');
-                });
-            });
-        });
-        describe('#authorize()', function() {
-            it('should get app token and track id', function() {
-                return airMedia.authorize()
-                .then(function() {
-                    should.exist(airMedia.appToken);
-                });
-            });
-            it('should get track id', function() {
-                airMedia.trackId.should.be.a('number');
-            });
-        });
-        describe('#trackAuthorization()', function() {
-            it('should grant authorization', function() {
-                return airMedia.trackAuthorization();
-            });
-        });
         describe('#openSession()', function() {
+            it('should ask for authorization on Freebox LCD', function() {
+                return airMedia.openSession();
+            });
             it('should get session token', function() {
-                return airMedia.openSession()
-                .then(function() {
-                    should.exist(airMedia.sessionToken);
-                });
+                should.exist(airMedia.sessionToken);
             });
             it('should get permissions', function() {
                 should.exist(airMedia.permissions);
@@ -60,5 +38,37 @@ describe('AirMedia', function() {
                 should.not.exist(airMedia.permissions);
             });
         }); 
+    });
+    context('when second login', function() {
+        var airMedia: AirMedia;
+        before(function() {
+            airMedia = new AirMedia("fr.freebox.airmedia.test", "AirMedia Test", "0.0.1");
+        });
+        describe('#openSession()', function() {
+            it('should not ask for authorization on Freebox LCD', function() {
+                return airMedia.openSession();
+            });
+            it('should get session token', function() {
+                should.exist(airMedia.sessionToken);
+            });
+            it('should get permissions', function() {
+                should.exist(airMedia.permissions);
+            });
+        });
+        describe('#closeSession()', function() {
+            it('should succeed', function() {
+                return airMedia.closeSession();
+            });
+            it('should not have session token', function() {
+                should.not.exist(airMedia.sessionToken);
+            });
+            it ('should not have permissions', function() {
+                should.not.exist(airMedia.permissions);
+            });
+        }); 
+    });
+    after(function() {
+        return Q.nfcall(fs.unlink, 'tokens/fr.freebox.airmedia.test')
+        .done();
     });
 });
