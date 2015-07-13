@@ -6,6 +6,7 @@ import request = require('request');
 import Login = require('./Login');
 
 class AirMedia extends Login {
+	
 	getReceivers(): Q.Promise<AirMedia.Receivers> {
 		return Q.nfcall(
 			request.get, this.baseUrl + 'airmedia/receivers/', this.requestOptions
