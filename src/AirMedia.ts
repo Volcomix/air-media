@@ -68,17 +68,19 @@ class AirMedia {
         private _appVersion: string
     ) { }
     
-    openSession(): Q.Promise<AirMedia> {
+    openSession(password: string, algorithm = 'aes192'): Q.Promise<AirMedia> {
         return this.discover()
         .then(() => {
-            return Q.nfcall(fs.readFile, this.appTokenFile);
+            return Q.nfcall(fs.readFile, this.appTokenFile, { encoding: 'binary' });
         })
         .then((data: string) => {
-            this._appToken = data;
+            var decipher = crypto.createDecipher(algorithm, password);
+            this._appToken = decipher.update(data, 'binary', 'utf8');
+            this._appToken += decipher.final('utf8');
             return this.getChallenge();
         })
-        .catch(() => {
-            return this.authorize()
+        .catch((error) => {
+            return this.authorize(password, algorithm)
             .then(() => {
                 return this.trackAuthorization();
             })
@@ -132,7 +134,7 @@ class AirMedia {
         });
     }
     
-    private authorize(): Q.Promise<AirMedia> {
+    private authorize(password: string, algorithm: string): Q.Promise<AirMedia> {
         return Q.nfcall(request.post, this._baseUrl + 'login/authorize/', {
             json: true,
             body: {
@@ -149,7 +151,10 @@ class AirMedia {
             return Q.nfcall(mkdirp, AirMedia.tokensDir);
         })
         .then(() => {
-            return Q.nfcall(fs.writeFile, this.appTokenFile, this._appToken);
+            var cipher = crypto.createCipher(algorithm, password);
+            var data = cipher.update(this._appToken, 'utf8', 'binary');
+            data += cipher.final('binary');
+            return Q.nfcall(fs.writeFile, this.appTokenFile, data, { encoding: 'binary' });
         })
         .then(() => {
             return this;

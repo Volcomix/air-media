@@ -24,10 +24,10 @@ declare module "air-media" {
         sessionToken: string;    
         permissions: any;    
         constructor(_appId: string, _appName: string, _appVersion: string);    
-        openSession(): Q.Promise<AirMedia>;    
+        openSession(password: string, algorithm?: string): Q.Promise<AirMedia>;    
         closeSession(): Q.Promise<AirMedia>;    
         private discover();    
-        private authorize();    
+        private authorize(password, algorithm);    
         private trackAuthorization();    
         private getChallenge();    
         private getResult(response, body);    

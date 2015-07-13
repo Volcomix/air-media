@@ -12,7 +12,7 @@ describe('AirMedia', function () {
         });
         describe('#openSession()', function () {
             it('should ask for authorization on Freebox LCD', function () {
-                return airMedia.openSession();
+                return airMedia.openSession('P@$$w0rd');
             });
             it('should get session token', function () {
                 should.exist(airMedia.sessionToken);
@@ -40,7 +40,7 @@ describe('AirMedia', function () {
         });
         describe('#openSession()', function () {
             it('should not ask for authorization on Freebox LCD', function () {
-                return airMedia.openSession();
+                return airMedia.openSession('P@$$w0rd');
             });
             it('should get session token', function () {
                 should.exist(airMedia.sessionToken);
