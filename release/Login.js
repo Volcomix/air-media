@@ -61,6 +61,25 @@ var Login = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Login.prototype, "headers", {
+        get: function () {
+            return {
+                'X-Fbx-App-Auth': this._sessionToken
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Login.prototype, "requestOptions", {
+        get: function () {
+            return {
+                json: true,
+                headers: this.headers
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
     Login.prototype.openSession = function (password, algorithm) {
         var _this = this;
         if (algorithm === void 0) { algorithm = 'aes192'; }
@@ -92,16 +111,19 @@ var Login = (function () {
     };
     Login.prototype.closeSession = function () {
         var _this = this;
-        return Q.nfcall(request.post, this._baseUrl + 'login/logout/', {
-            json: true,
-            headers: {
-                'X-Fbx-App-Auth': this._sessionToken
-            }
-        }).spread(this.getResult).then(function () {
+        return Q.nfcall(request.post, this._baseUrl + 'login/logout/', this.requestOptions).spread(this.getResult).then(function () {
             _this._sessionToken = undefined;
             _this._permissions = undefined;
             return _this;
         });
+    };
+    Login.prototype.getResult = function (response, body) {
+        if (response.statusCode == 200 && body.success) {
+            return body.result;
+        }
+        else {
+            throw new Error(body.msg || response.statusMessage);
+        }
     };
     Login.prototype.discover = function () {
         var _this = this;
@@ -158,14 +180,6 @@ var Login = (function () {
             _this._challenge = result.challenge;
             return _this;
         });
-    };
-    Login.prototype.getResult = function (response, body) {
-        if (response.statusCode == 200 && body.success) {
-            return body.result;
-        }
-        else {
-            throw new Error(body.msg || response.statusMessage);
-        }
     };
     Login.freeboxHost = 'http://mafreebox.freebox.fr';
     Login.tokensDir = 'tokens/';

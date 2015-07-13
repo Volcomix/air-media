@@ -8,7 +8,7 @@ describe('Login', function () {
     context('when first login', function () {
         var login;
         before(function () {
-            login = new Login("fr.freebox.air-media.Login.test", "air-media Login Test", "0.0.1");
+            login = new Login("air-media.Login.test", "air-media Login Test", "0.0.1");
         });
         describe('#openSession()', function () {
             it('should ask for authorization on Freebox LCD', function () {
@@ -36,7 +36,7 @@ describe('Login', function () {
     context('when second login', function () {
         var login;
         before(function () {
-            login = new Login("fr.freebox.air-media.Login.test", "air-media Login Test", "0.0.1");
+            login = new Login("air-media.Login.test", "air-media Login Test", "0.0.1");
         });
         describe('#openSession()', function () {
             it('should not ask for authorization on Freebox LCD', function () {
@@ -62,6 +62,6 @@ describe('Login', function () {
         });
     });
     after(function () {
-        return Q.nfcall(fs.unlink, 'tokens/fr.freebox.air-media.Login.test').done();
+        return Q.nfcall(fs.unlink, 'tokens/air-media.Login.test').done();
     });
 });

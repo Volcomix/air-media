@@ -15,7 +15,7 @@ describe('Login', function() {
         var login: Login;
         before(function() {
             login = new Login(
-                "fr.freebox.air-media.Login.test",
+                "air-media.Login.test",
                 "air-media Login Test",
                 "0.0.1"
             );
@@ -47,7 +47,7 @@ describe('Login', function() {
         var login: Login;
         before(function() {
             login = new Login(
-                "fr.freebox.air-media.Login.test",
+                "air-media.Login.test",
                 "air-media Login Test",
                 "0.0.1"
             );
@@ -76,7 +76,7 @@ describe('Login', function() {
         }); 
     });
     after(function() {
-        return Q.nfcall(fs.unlink, 'tokens/fr.freebox.air-media.Login.test')
+        return Q.nfcall(fs.unlink, 'tokens/air-media.Login.test')
         .done();
     });
 });

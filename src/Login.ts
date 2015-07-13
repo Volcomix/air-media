@@ -50,6 +50,19 @@ class Login {
         return this._permissions;
     }
     
+    get headers(): any {
+        return {
+            'X-Fbx-App-Auth': this._sessionToken
+        };
+    }
+    
+    get requestOptions(): any {
+        return {
+            json: true,
+            headers: this.headers
+        }
+    }
+    
     constructor(
         private _appId: string,
         private _appName: string,
@@ -92,18 +105,21 @@ class Login {
     }
     
     closeSession(): Q.Promise<Login> {
-        return Q.nfcall(request.post, this._baseUrl + 'login/logout/', {
-            json: true,
-            headers: {
-                'X-Fbx-App-Auth': this._sessionToken
-            }
-        })
+        return Q.nfcall(request.post, this._baseUrl + 'login/logout/', this.requestOptions)
         .spread(this.getResult)
         .then(() => {
             this._sessionToken = undefined;
             this._permissions = undefined;
             return this;
         });
+    }
+    
+    getResult(response: http.IncomingMessage, body: any): any {
+        if (response.statusCode == 200 && body.success) {
+            return body.result;
+        } else {
+            throw new Error(body.msg || response.statusMessage);
+        }
     }
 
     private discover(): Q.Promise<Login> {
@@ -176,14 +192,6 @@ class Login {
             this._challenge = result.challenge;
             return this;
         });
-    }
-    
-    private getResult(response: http.IncomingMessage, body: any): any {
-        if (response.statusCode == 200 && body.success) {
-            return body.result;
-        } else {
-            throw new Error(body.msg || response.statusMessage);
-        }
     }
 }
 
