@@ -91,10 +91,8 @@ var AirMedia = (function () {
             var decipher = crypto.createDecipher(algorithm, password);
             _this._appToken = decipher.update(data, 'binary', 'utf8');
             _this._appToken += decipher.final('utf8');
-            console.log(_this._appToken);
             return _this.getChallenge();
         }).catch(function (error) {
-            console.error(error);
             return _this.authorize(password, algorithm).then(function () {
                 return _this.trackAuthorization();
             });
@@ -151,7 +149,6 @@ var AirMedia = (function () {
             _this._trackId = result.track_id;
             return Q.nfcall(mkdirp, AirMedia.tokensDir);
         }).then(function () {
-            console.log(_this._appToken);
             var cipher = crypto.createCipher(algorithm, password);
             var data = cipher.update(_this._appToken, 'utf8', 'binary');
             data += cipher.final('binary');
