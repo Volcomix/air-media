@@ -1,0 +1,45 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "request/request.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "node/node.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "form-data/form-data.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "del/del.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "glob/glob.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "gulp-mocha/gulp-mocha.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "gulp-typescript/gulp-typescript.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "gulp/gulp.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "chai/chai.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    },
+    "q/Q.d.ts": {
+      "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "air-media",
+  "version": "0.0.1",
+  "description": "Client module for Freebox AirMedia API",
+  "main": "release/AirMedia.js",
+  "typescript": {
+    "definition": "release/definitions/AirMedia.d.ts"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Volcomix/air-media.git"
+  },
+  "keywords": [
+    "Freebox",
+    "AirMedia",
+    "API",
+    "client"
+  ],
+  "author": "Volcomix",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Volcomix/air-media/issues"
+  },
+  "homepage": "https://github.com/Volcomix/air-media#readme",
+  "dependencies": {
+    "q": "^1.4.1",
+    "request": "^2.58.0"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-ambient-typescript": "git+https://github.com/Volcomix/gulp-ambient-typescript.git",
+    "gulp-mocha": "^2.1.2",
+    "gulp-typescript": "^2.7.8",
+    "merge2": "^0.3.6"
+  }
+}
